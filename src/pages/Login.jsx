@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Sparkles, Mail, Lock, Building2, User, ArrowRight } from 'lucide-react';
 
 export const Login = () => {
-  const { signIn, signUp, loginAsDemo } = useAuth();
+  const { user, signIn, signUp, loginAsDemo } = useAuth();
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,6 +15,12 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [clinicName, setClinicName] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

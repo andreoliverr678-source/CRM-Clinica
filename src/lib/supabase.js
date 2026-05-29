@@ -3,7 +3,10 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-export const isSupabaseConfigured = supabaseUrl !== '' && supabaseAnonKey !== '';
+export const isSupabaseConfigured = 
+  supabaseUrl !== '' && 
+  supabaseAnonKey !== '' && 
+  supabaseUrl.startsWith('http');
 
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey)
@@ -11,6 +14,6 @@ export const supabase = isSupabaseConfigured
 
 if (!isSupabaseConfigured) {
   console.warn(
-    'Supabase não está configurado. O CRM está rodando em modo DEMONSTRAÇÃO (dados mockados locais).'
+    'Supabase não está configurado ou contém placeholders. O CRM está rodando em modo DEMONSTRAÇÃO (dados mockados locais).'
   );
 }
